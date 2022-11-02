@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>Contact Us</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -14,19 +14,21 @@
 </head>
 
     <body>
-    <!--Add a nav bar here -->
+        <!--Add a nav bar here -->
         <nav class="navbar-light bg-light">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Home</a>
+                    <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Home</a>
                     <a class="navbar-brand" href="{% url 'djangoapp:about' %}">About Us</a>
-                    <a class="navbar-brand" href="{% url 'djangoapp:contact' %}">Contact Us</a>
+                    <a class="navbar-brand" href="#">Contact Us</a>
                 </div>
             </div>
         </nav>
 
-    <!--Add a dealer table here -->
 
+        <h1>
+            This is our contact information!
+        </h1>
     </body>
 
 </html>

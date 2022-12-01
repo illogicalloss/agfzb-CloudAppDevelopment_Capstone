@@ -69,7 +69,7 @@ def registration_request(request):
             User.objects.get(username=username)
             user_exist = True
         except:
-            logger.debug("{} is a new usser".format(username))
+            logger.debug("{} is a new user".format(username))
         #create new user
         if not user_exist:
             user = User.objects.create_user(username=username,password=password,first_name=first_name,last_name=last_name)

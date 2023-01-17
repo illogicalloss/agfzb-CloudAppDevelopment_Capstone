@@ -35,6 +35,16 @@ def get_request(url, **kwargs):
 
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
+def post_request(url, payload, **kwargs):
+    print(kwargs)
+    print("POST to {} ".format(url))
+    print(payload)
+    response = requests.post(url, params=kwargs, json=payload)
+    status_code = response.status_code
+    print("With status {} ".format(status_code))
+    json_data = json.loads(response.text)
+    return json_data
+
 
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
@@ -73,13 +83,13 @@ def get_dealer_reviews_from_cf(url,dealer_id, **kwargs):
             review_obj = DealerReview(dealership=review["dealership"], name=review["name"], purchase=review["purchase"], review=review["review"], purchase_date="", car_make="", car_model="",car_year="", sentiment="", id=review["id"])
             review_obj.sentiment = analyze_review_sentiments(review_obj.review)
             if "purchase_date" in review:
-                self.purchase_date=review["purchase_date"]
+                review_obj.purchase_date=review["purchase_date"]
             if "car_make" in review:
-                self.car_make=review["car_make"]
+                review_obj.car_make=review["car_make"]
             if "car_model" in review:
-                self.car_model=review["car_model"]
+                review_obj.car_model=review["car_model"]
             if "car_year" in review:
-                self.car_year=review["car_year"]
+                review_obj.car_year=review["car_year"]
 
             results.append(review_obj)
     else:

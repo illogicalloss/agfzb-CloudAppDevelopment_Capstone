@@ -14,20 +14,42 @@
     <!--Add review form here -->
     <form action="{% url 'djangoapp:add_review' dealer_id %}" method="post">
         <div class="container">
-            <h1>Add a review for dealer #{{dealer_id}}</h1>
+            <h1>Add a review for {{dealer.full_name}}</h1>
             <hr>
-            <label for="name"><b>Name</b></label><br>
-            <input type="text" placeholder="Enter your name:" name="name" required><br>
-            <label for="review"><b>Review</b></label><br>
-            <input type="review" placeholder="Enter your review here:" name="review" required><br>
-            <label for="firstname"><b>First Name</b></label><br>
-            <input type="text" placeholder="Enter a first name:" name="firstname" required><br>
-            <label for="lastname"><b>Last Name</b></label><br>
-            <input type="text" placeholder="Enter a last name:" name="lastname" required><br><br>
-            <div>
+                <div class="form-group">
+                    <label for="content"><b>Enter your review:</b></label><br>
+                    <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                    <label for="purchasecheck">Have you purchased a car from this dealership? (select car information below if checked)</label>
+                </div>
+
+                <div class="form-group">
+                    <label for="car"><b>Select your car (model-make-year):</b></label>
+                    <select name="car" id="car" class="form-select" required>
+                        {% for car in cars %}
+                            <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{car.year}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group" data-provide="datepicker">
+                    <label for="purchasedate"><b>Select Your Purchase Date</b></label>
+                    <input class="date-own form-control" style="width: 300px;" type="text" name="purchasedate" id="purchasedate">
+                </div>
+
                 {% csrf_token %}
-                <button class="button" type="submit">Register</button>
+                <button class="button" type="submit">Submit</button>
             </div>
         </div>
+        
     </body>
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+           format: 'mm/dd/yyyy'
+         });
+   </script>
+    
 </html>

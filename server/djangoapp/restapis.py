@@ -95,7 +95,17 @@ def get_dealer_reviews_from_cf(url,dealer_id, **kwargs):
     else:
         return 404
     return results
-
+#Get A specific Dealer Specified by an ID
+def get_dealer_by_id_from_cf(url, id, **kwargs):
+    results = []
+    #Call get_request with a url parameter
+    json_result = get_request(url,id=id)
+    if json_result:
+        #get the row list in JSON as dealers
+        dealer = json_result["result"][0]
+        #Create a Car Dealer object
+        dealer_obj = CarDealer(address=dealer["address"], city=dealer["city"], full_name=dealer["full_name"], id=dealer["id"], lat=dealer["lat"], long=dealer["long"],   short_name=dealer["short_name"], st=dealer["st"], zip=dealer["zip"])
+    return dealer_obj
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 # def analyze_review_sentiments(text):    

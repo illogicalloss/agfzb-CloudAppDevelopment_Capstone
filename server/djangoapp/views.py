@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
@@ -45,7 +45,7 @@ def login_request(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('djangoapp:index')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
             return redirect('djangoapp:registration')
     else:
@@ -103,6 +103,8 @@ def get_dealer_details(request, dealer_id):
         url = "https://us-south.functions.appdomain.cloud/api/v1/web/7ab6e43a-6ec0-4080-a0b3-481deeeb1bc1/djangoapp/get_reviews.json?id=" + str(dealer_id)
         context["reviews"] = get_dealer_reviews_from_cf(url, dealer_id)
         context["dealer_id"] = dealer_id
+        dealerUrl = "https://us-south.functions.appdomain.cloud/api/v1/web/7ab6e43a-6ec0-4080-a0b3-481deeeb1bc1/djangoapp/get_dealership_by_id.json?dealer_id=" + str(dealer_id)
+        context["dealer"]=get_dealer_by_id_from_cf(dealerUrl,dealer_id)
         #if reviews==404:
         #    review_contents="This dealership has no reviews."
         #else:

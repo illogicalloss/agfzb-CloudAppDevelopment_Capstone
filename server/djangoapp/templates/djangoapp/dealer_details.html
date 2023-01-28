@@ -43,32 +43,36 @@
             </div>
         </nav>
     <!-- Add reviews as cards -->
-        <h1>Add a review for dealer {{dealer_id}}</h1>
-        <div class="card-columns">
-        {% for review in reviews %}
-        <div class="card">
-            {% if review.sentiment == "positive" %}
-                <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" width=50px>
-            {% endif %}
-            {% if review.sentiment == "negative" %}
-                <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" width=50px>
-            {% endif %}
-            {% if review.sentiment == "neutral" %}
-                <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" width=50px>
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">
-                    {{review.car_make}} , {{review.car_model}}
-                    <br>
-                    {{review.car_year}}
-                </h5>
-                <div class="card-text">
-                {{review.review}}
+        <h1>Reviews for {{dealer.full_name}}</h1>
+        {% if reviews == 404 %}
+            <h1>No reviews for this dealer yet!</h1>
+        {% else %}
+            <div class="card-columns">
+            {% for review in reviews %}
+            <div class="card">
+                {% if review.sentiment == "positive" %}
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" width=50px>
+                {% endif %}
+                {% if review.sentiment == "negative" %}
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" width=50px>
+                {% endif %}
+                {% if review.sentiment == "neutral" %}
+                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" width=50px>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{review.car_make}} , {{review.car_model}}
+                        <br>
+                        {{review.car_year}}
+                    </h5>
+                    <div class="card-text">
+                    {{review.review}}
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-        </div>
+            {% endfor %}
+            </div>
+        {% endif %}
         <!--Create a add review button if user is signed in-->
         {% if user.is_authenticated %}
             <a class="btn btn-primary" href="{% url 'djangoapp:add_review' dealer_id %}" role="button">Add a Review!</a>
